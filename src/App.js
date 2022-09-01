@@ -22,25 +22,25 @@ class App extends Component {
     }
   }
 
-  loadUsers = () => {
-    this.setState({ isLoading: true });
-    const { page } = this.state;
-    axios
-      .get(`https://randomuser.me/api/?page=${page}&results=10`)
-      .then((response) =>
-        this.setState((prevState) => ({
-          users: [...prevState.users, ...response.data.results],
-          errorMsg: "",
-        }))
-      )
-      .catch((err) =>
-        this.setState({
-          errorMsg: "Error while loading data. Try again later.",
-        })
-      )
-      .finally(() => {
-        this.setState({ isLoading: false });
+  loadUsers = async () => {
+    try {
+      this.setState({ isLoading: true });
+      const { page } = this.state;
+
+      const response = await axios.get(
+        `https://randomuser.me/api/?page=${page}&results=10`
+      );
+      this.setState((prevState) => ({
+        users: [...prevState.users, ...response.data.results],
+        errorMsg: "",
+      }));
+    } catch (error) {
+      this.setState({
+        errorMsg: "Error while loading data. Try again later.",
       });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   };
 
   loadMore = () => {
