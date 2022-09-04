@@ -20,7 +20,7 @@ const AppFunctional = () => {
         setUsers((users) => [...users, ...response.data.results]);
         setErrorMsg("");
       } catch (error) {
-        setErrorMsg("Error while loading data. Try again later.");
+        setErrorMsg("Error while loading data. Try again later");
       } finally {
         setIsLoading(false);
       }
